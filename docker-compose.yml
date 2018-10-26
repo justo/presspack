@@ -18,9 +18,9 @@ services:
       - db
     image: wordpress:apache
     volumes:
-      - .:/var/www/html/wp-content/themes/presspack
+      - ./theme:/var/www/html/wp-content/themes/presspack
       - ./wp-content/plugins:/var/www/html/wp-content/plugins
-      - ./uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
+      - ./config/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
     links:
       - db
     ports:

@@ -1,7 +1,3 @@
-'use strict';
-
-process.env.NODE_ENV = 'production';
-
 // Makes the script crash on unhandled rejections instead of silently
 // ignoring them. In the future, promise rejections that are not handled will
 // terminate the Node.js process with a non-zero exit code.
@@ -11,8 +7,6 @@ process.on('unhandledRejection', err => {
 
 const webpack = require('webpack');
 const config = require('./webpack.config');
-
-const clientCompiler = webpack(config);
 
 console.log('[0/1] Creating an optimized production build...');
 compile(config, (err, stats) => {

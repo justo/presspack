@@ -2,7 +2,7 @@ const webpack = require('webpack');
 const AssetsPlugin = require('assets-webpack-plugin');
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
 const path = require('path');
 const fs = require('fs');
@@ -22,9 +22,8 @@ function resolveApp(relativePath) {
 
 const paths = {
 	appSrc: resolveApp('src'),
-	appBuild: resolveApp('build'),
+	appBuild: resolveApp('theme/dist'),
 	appIndexJs: resolveApp('src/index.js'),
-	appNodeModules: resolveApp('node_modules'),
 };
 
 const DEV = process.env.NODE_ENV === 'development';
@@ -35,7 +34,7 @@ module.exports = {
 	// We generate sourcemaps in production. This is slow but gives good results.
 	// You can exclude the *.map files from the build during deployment.
 	target: 'web',
-	devtool: DEV ? 'cheap-eval-source-map' : 'source-map',
+	devtool: DEV ? 'cheap-module-source-map' : 'source-map',
 	entry: [paths.appIndexJs],
 	output: {
 		path: paths.appBuild,
@@ -59,11 +58,17 @@ module.exports = {
 			{
 				test: /\.(sa|sc|c)ss$/,
 				use: [
-					DEV ? 'style-loader' : MiniCssExtractPlugin.loader,
-					'css-loader',
+					MiniCssExtractPlugin.loader,
+					{
+						loader: 'css-loader',
+						options: {
+							sourceMap: true
+						}
+					},
                     {
                         loader: 'postcss-loader',
 	                    options: {
+							sourceMap: true,
 		                    plugins: (loader) => [
 			                    postcssImport({ root: loader.resourcePath }),
 			                    postcssPresetEnv(),
@@ -72,13 +77,18 @@ module.exports = {
 		                    ].filter(Boolean)
 	                    }
                     },
-					'sass-loader',
+					{
+						loader: 'sass-loader',
+						options: {
+							sourceMap: true
+						}
+					},
 				],
 			},
 		],
 	},
 	plugins: [
-		!DEV && new CleanWebpackPlugin(['build']),
+		new CleanWebpackPlugin([ paths.appBuild ], { root: resolveApp('.') }),
 		new MiniCssExtractPlugin({
 			filename: DEV ? '[name].css' : 'name.[hash:8].css',
 			chunkFilename: DEV ? '[id].css' : '[id].[hash:8].css',

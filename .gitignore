@@ -1,5 +1,5 @@
 db
-build
+theme/dist
 wp-content
 vendor
 .idea
