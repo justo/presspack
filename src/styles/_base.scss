@@ -5,19 +5,14 @@ html {
   text-rendering: optimizeLegibility;
 }
 
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
 html, body {
   height: 100%;
 }
 
 body {
   font-family: $sans;
-}
-
-a {
-    color: #3897f0;
-    text-decoration: none
-}
-
-a:hover {
-    text-decoration: underline
 }

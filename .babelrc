@@ -3,27 +3,14 @@
     "development": {
       "presets": [
         [
-          "env",
-          {
-            "modules": false,
-            "targets": {
-              "ie9": true
-            }
-          }
+          "@babel/preset-env"
         ]
       ]
     },
     "production": {
       "presets": [
         [
-          "env",
-          {
-            "modules": false,
-            "targets": {
-              "ie9": true,
-              "uglify": true
-            }
-          }
+          "@babel/preset-env"
         ]
       ]
     }
