@@ -19,13 +19,12 @@ services:
     image: wordpress:apache
     volumes:
       - ./theme:/var/www/html/wp-content/themes/presspack
+      - ./vendor:/var/www/html/wp-content/themes/presspack/vendor
       - ./wp-content/plugins:/var/www/html/wp-content/plugins
       - ./config/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
-    links:
-      - db
+    restart: always
     ports:
       - "9009:80"
-    restart: always
     environment:
       WORDPRESS_DB_HOST: db:3306
       WORDPRESS_DB_USER: wordpress
