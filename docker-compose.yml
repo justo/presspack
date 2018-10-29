@@ -14,9 +14,11 @@ services:
       MYSQL_PASSWORD: wordpress
 
   wordpress:
+    build:
+      context: config
+      dockerfile: Dockerfile
     depends_on:
       - db
-    image: wordpress:apache
     volumes:
       - ./theme:/var/www/html/wp-content/themes/presspack
       - ./vendor:/var/www/html/wp-content/themes/presspack/vendor
@@ -29,3 +31,5 @@ services:
       WORDPRESS_DB_HOST: db:3306
       WORDPRESS_DB_USER: wordpress
       WORDPRESS_DB_PASSWORD: wordpress
+      XDEBUG_CONFIG: remote_host=docker.for.mac.localhost
+#      PHP_XDEBUG_ENABLED: 1
